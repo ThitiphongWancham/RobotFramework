@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.10.5 on darwin)" generated="20230316 16:04:53.890" rpa="false" schemaversion="3">
+<suite id="s1" name="testDemo7" source="/Users/thiti_w/Desktop/Software_Testing/RobotFramework/tests/testDemo7.robot">
+<test id="s1-t1" name="Play around with dictionary" line="11">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{data}</var>
+<arg>name=rahulshetty</arg>
+<arg>course=robot</arg>
+<arg>website=rahulshettyacademy.com</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230316 16:04:53.929" level="INFO">&amp;{data} = { name=rahulshetty | course=robot | website=rahulshettyacademy.com }</msg>
+<status status="PASS" starttime="20230316 16:04:53.929" endtime="20230316 16:04:53.930"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${data}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230316 16:04:53.930" level="INFO">{'name': 'rahulshetty', 'course': 'robot', 'website': 'rahulshettyacademy.com'}</msg>
+<status status="PASS" starttime="20230316 16:04:53.930" endtime="20230316 16:04:53.930"/>
+</kw>
+<kw name="Dictionary Should Contain Key" library="Collections">
+<arg>${data}</arg>
+<arg>name</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" starttime="20230316 16:04:53.930" endtime="20230316 16:04:53.931"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${data}[name]</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230316 16:04:53.931" level="INFO">rahulshetty</msg>
+<status status="PASS" starttime="20230316 16:04:53.931" endtime="20230316 16:04:53.931"/>
+</kw>
+<status status="PASS" starttime="20230316 16:04:53.928" endtime="20230316 16:04:53.931"/>
+</test>
+<test id="s1-t2" name="Add book into library database" line="18">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{req_body}</var>
+<arg>name=Learn Appium Automation with Java</arg>
+<arg>isbn=xcba</arg>
+<arg>aisle=2278</arg>
+<arg>author=John foe</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230316 16:04:53.932" level="INFO">&amp;{req_body} = { name=Learn Appium Automation with Java | isbn=xcba | aisle=2278 | author=John foe }</msg>
+<status status="PASS" starttime="20230316 16:04:53.932" endtime="20230316 16:04:53.932"/>
+</kw>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${base_url}/Library/Addbook.php</arg>
+<arg>json=${req_body}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20230316 16:04:54.254" level="INFO">POST Request : url=https://rahulshettyacademy.com/Library/Addbook.php 
+ path_url=/Library/Addbook.php 
+ headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json'} 
+ body=b'{"name": "Learn Appium Automation with Java", "isbn": "xcba", "aisle": "2278", "author": "John foe"}' 
+ </msg>
+<msg timestamp="20230316 16:04:54.254" level="INFO">POST Response : url=https://rahulshettyacademy.com/Library/Addbook.php 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 16 Mar 2023 09:04:54 GMT', 'Server': 'Apache/2.4.41 (Ubuntu)', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST', 'Access-Control-Max-Age': '3600', 'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With', 'Content-Length': '83', 'Keep-Alive': 'timeout=5, max=100', 'Connection': 'Keep-Alive', 'Content-Type': 'application/json;charset=UTF-8'} 
+ body={"Msg":"The Book with the entered Isbn and Aisle already Exists!!","ID":"xcba2278"} 
+ </msg>
+<msg timestamp="20230316 16:04:54.255" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230316 16:04:53.932" endtime="20230316 16:04:54.255"/>
+</kw>
+<kw name="Dictionary Should Contain Key" library="Collections">
+<arg>${response.json()}</arg>
+<arg>ID</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" starttime="20230316 16:04:54.255" endtime="20230316 16:04:54.256"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${book_id}</var>
+<arg>${response.json()}</arg>
+<arg>ID</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230316 16:04:54.257" level="INFO">${book_id} = xcba2278</msg>
+<status status="PASS" starttime="20230316 16:04:54.256" endtime="20230316 16:04:54.257"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${book_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230316 16:04:54.257" level="INFO">xcba2278</msg>
+<status status="PASS" starttime="20230316 16:04:54.257" endtime="20230316 16:04:54.258"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20230316 16:04:54.258" endtime="20230316 16:04:54.258"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${book_id}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230316 16:04:54.259" level="INFO">${book_id} = xcba2278</msg>
+<status status="PASS" starttime="20230316 16:04:54.258" endtime="20230316 16:04:54.259"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${book_name}</var>
+<arg>${req_body}[name]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230316 16:04:54.259" level="INFO">${book_name} = Learn Appium Automation with Java</msg>
+<status status="PASS" starttime="20230316 16:04:54.259" endtime="20230316 16:04:54.260"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${book_name}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230316 16:04:54.260" level="INFO">${book_name} = Learn Appium Automation with Java</msg>
+<status status="PASS" starttime="20230316 16:04:54.260" endtime="20230316 16:04:54.260"/>
+</kw>
+<status status="PASS" starttime="20230316 16:04:53.931" endtime="20230316 16:04:54.261"/>
+</test>
+<test id="s1-t3" name="Get book details" line="30">
+<kw name="GET" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${base_url}/Library/GetBook.php</arg>
+<arg>params=ID=${book_id}</arg>
+<doc>Sends a GET request.</doc>
+<msg timestamp="20230316 16:04:54.556" level="INFO">GET Request : url=https://rahulshettyacademy.com/Library/GetBook.php?ID=xcba2278 
+ path_url=/Library/GetBook.php?ID=xcba2278 
+ headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20230316 16:04:54.556" level="INFO">GET Response : url=https://rahulshettyacademy.com/Library/GetBook.php?ID=xcba2278 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 16 Mar 2023 09:04:54 GMT', 'Server': 'Apache/2.4.41 (Ubuntu)', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST', 'Access-Control-Max-Age': '3600', 'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With', 'Content-Length': '100', 'Keep-Alive': 'timeout=5, max=100', 'Connection': 'Keep-Alive', 'Content-Type': 'application/json;charset=UTF-8'} 
+ body=[{"book_name":"Learn Appium Automation with Java","isbn":"xcba","aisle":"2278","author":"John foe"}] 
+ </msg>
+<msg timestamp="20230316 16:04:54.557" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230316 16:04:54.262" endtime="20230316 16:04:54.557"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20230316 16:04:54.557" endtime="20230316 16:04:54.557"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${response.json()[0]}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230316 16:04:54.558" level="INFO">{'book_name': 'Learn Appium Automation with Java', 'isbn': 'xcba', 'aisle': '2278', 'author': 'John foe'}</msg>
+<status status="PASS" starttime="20230316 16:04:54.558" endtime="20230316 16:04:54.559"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${book_name}</arg>
+<arg>${response.json()[0]}[book_name]</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230316 16:04:54.559" endtime="20230316 16:04:54.560"/>
+</kw>
+<status status="PASS" starttime="20230316 16:04:54.262" endtime="20230316 16:04:54.560"/>
+</test>
+<status status="PASS" starttime="20230316 16:04:53.891" endtime="20230316 16:04:54.562"/>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="3" fail="0" skip="0" id="s1" name="testDemo7">testDemo7</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
